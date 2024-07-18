@@ -20,9 +20,9 @@
         <button type="submit" class="btn btn-primary btn-block btn-large">Получить прогноз</button>
     </form>
     <div class="forecast">
-        {% for dt in date_and_temperature_dict %}
+        {% for dt in date_and_temperature_list %}
             <div class="forecast__days">{{dt.date|date:"d"}} {{dt.date|date:"D"}}
-                        <br>{{dt.temperature|default:"-"}}
+                        <br>{{dt.temperature|default:"-"}}&#8451
             </div>
         {% endfor %}
     </div>
