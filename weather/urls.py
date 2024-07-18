@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-# from weather.forecast.views import pageNotFound
+from forecast.views import pageNotFound
 
 
 urlpatterns = [
@@ -24,5 +24,5 @@ urlpatterns = [
     path('', include('forecast.urls', namespace='forecast'))
 ]
 
-# handler404 = pageNotFound
-# handler403 = pageNotFound
+handler404 = pageNotFound
+handler403 = pageNotFound

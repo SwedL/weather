@@ -5,11 +5,12 @@ import numpy as np
 
 
 class WeatherSource:
+    """Класс получения прогноза погоды по городу"""
     URL_GET_COORD = "https://geocoding-api.open-meteo.com/v1/search"
     URL_WEATHER_FORECAST = "https://api.open-meteo.com/v1/forecast"
 
     def get_weather_forecast(self, city) -> List:
-
+        """Функция """
         # Транслитерация названия города с русского на английский
         city_en = translit(city, language_code='ru', reversed=True)
         all_cities_data = requests.get(url=self.URL_GET_COORD, params={'name': city_en})
