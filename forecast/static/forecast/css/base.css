@@ -1,0 +1,107 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "PPTSans";
+  src: url("../fonts/PTSans-Regular.ttf");
+  font-weight: regular;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PPTSans";
+  src: url("../fonts/PTSans-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+html {
+  font-family: "PPTSans";
+  font-weight: regular;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #C6D0D7;
+}
+
+.header {
+  top: 0;
+  height: 60px;
+  background: #0F1C23;
+}
+
+.header__container {
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 1300px;
+  margin: 0 auto;
+}
+
+.header__container-logo {
+  width: 580px;
+}
+
+.header__container-nav {
+  width: 640px;
+}
+
+.header__logo {
+  margin-left: 150px;
+  margin-right: 300px;
+  width: 130px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+}
+
+.nav-menu__list {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu__list-item {
+  margin-right: 50px;
+  font-size: 16px;
+}
+
+.nav-menu__list-item:last-child {
+  margin-right: 0px;
+}
+
+.nav-menu__text {
+  color: #FF881B;
+  font-family: "PPTSans";
+  text-decoration: none;
+}
+
+.nav-menu__text:hover {
+  color: #ffaf65;
+}
+
+.empty-text {
+  width: 262px;
+}
+
+.form-control {
+  margin-bottom: 10px;
+  background: #C6D0D7;
+}
+
+.page-link {
+  color: #000000;
+}
+
+
+footer {
+  height: 50px;
+}
