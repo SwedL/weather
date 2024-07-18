@@ -29,13 +29,15 @@ class WeatherForecastView(WeatherSource, View):
     def post(self, request):
         city = request.POST['city']
 
+        temperatures_by_week, error = self.get_weather_forecast(city)
         date_and_temperature_list = [{'date': d, 'temperature': t} for d, t in
-                                     zip(self.create_date, self.get_weather_forecast(city))]
+                                     zip(self.create_date, temperatures_by_week)]
 
         context = {
             'form': self.form_class,
             'title': self.title,
             'date_and_temperature_list': date_and_temperature_list,
+            'error': error,
         }
 
         return render(request, 'forecast/main.html', context=context)
