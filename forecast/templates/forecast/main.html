@@ -10,15 +10,22 @@
 
 {% block content %}
 
-<div class="login">
+<div class="city">
     <h1></h1>
-<form method="post">
-    {% csrf_token %}
+    <form method="post">
+        {% csrf_token %}
 
-    {{form.city}}
+        {{form.city}}
 
-    <button type="submit" class="btn btn-primary btn-block btn-large">Получить прогноз</button>
-</form>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Получить прогноз</button>
+    </form>
+    <div class="forecast">
+        {% for dt in date_and_temperature_dict %}
+            <div class="forecast__days">{{dt.date|date:"d"}} {{dt.date|date:"D"}}
+                        <br>{{dt.temperature|default:"-"}}
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}
