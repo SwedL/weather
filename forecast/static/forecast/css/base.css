@@ -25,7 +25,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #C6D0D7;
+  background-color: #DEFDFF;
 }
 
 .header {
@@ -57,51 +57,9 @@ body {
   width: 130px;
 }
 
-.nav-menu {
-  display: flex;
-  align-items: center;
-}
-
-.nav-menu__list {
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-menu__list-item {
-  margin-right: 50px;
-  font-size: 16px;
-}
-
-.nav-menu__list-item:last-child {
-  margin-right: 0px;
-}
-
-.nav-menu__text {
-  color: #FF881B;
-  font-family: "PPTSans";
-  text-decoration: none;
-}
-
-.nav-menu__text:hover {
-  color: #ffaf65;
-}
-
-.empty-text {
-  width: 262px;
-}
-
 .form-control {
-  margin-bottom: 10px;
+  margin-bottom: 100px;
   background: #C6D0D7;
 }
 
-.page-link {
-  color: #000000;
-}
 
-
-footer {
-  height: 50px;
-}
