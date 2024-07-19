@@ -53,7 +53,7 @@ python manage.py migrate
 ```sh
 python manage.py runserver
 ```
-Сервер работает на адресе <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>
+Сервер работает на адресе <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a>
 
 ## Как запустить версию сайта в docker.
 Скачайте код:
@@ -71,7 +71,7 @@ docker build . --tag weather
 ```sh
 docker run --rm -d --publish 8000:8000 weather
 ```
-Сервер работает на адресе <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>
+Сервер работает на адресе <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a>
 
 ### Тестирование
 
