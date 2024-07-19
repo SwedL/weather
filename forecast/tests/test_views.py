@@ -3,6 +3,9 @@ from http import HTTPStatus
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 
+from forecast.forms import CityNameForm
+from forecast.views import WeatherForecastView
+
 
 class WeatherForecastViewTest(SimpleTestCase):
     """ Тест представления WeatherForecastView """
@@ -24,3 +27,8 @@ class WeatherForecastViewTest(SimpleTestCase):
         self.assertTemplateUsed(self.response, 'forecast/main.html')
         self.assertIn('Получить прогноз', self.response.content.decode())
         self.assertIn('X', self.response.content.decode())
+
+    def test_get_weather_forecast(self):
+        # Тест на получение данных погоды
+        pass
+    

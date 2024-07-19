@@ -1,19 +1,25 @@
-from django.shortcuts import render
-from django.http import HttpResponseNotFound, HttpResponseRedirect
-from django.views import View
-from django.core.cache import cache
-from .forms import CityNameForm
 from datetime import date, timedelta
-from common.views import WeatherSource
+
+from django.core.cache import cache
+from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
+from django.views import View
+
+from common.views import WeatherSource
+
+from .forms import CityNameForm
 
 
 class WeatherForecastView(WeatherSource, View):
+    """ Представление главной страницы прогноза погоды """
+
     title = 'Прогноз погоды'
     form_class = CityNameForm
 
     @property
     def create_date(self):
+        """ Функция создаёт и возвращает список дней недели"""
         dates_week = [date.today() + timedelta(days=i) for i in range(7)]
         return dates_week
 

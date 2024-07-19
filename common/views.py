@@ -1,7 +1,8 @@
 from typing import Tuple
+
+import numpy as np
 import requests
 from transliterate import translit
-import numpy as np
 
 
 class WeatherSource:
@@ -10,11 +11,16 @@ class WeatherSource:
     URL_WEATHER_FORECAST = "https://api.open-meteo.com/v1/forecast"
 
     def get_weather_forecast(self, city) -> Tuple:
-        """Функция """
+        """
+        Функция получает название города, находит его координаты, затем по координатам получает данные
+        по температурам этих координат на неделю.
+        Возвращает список из максимальных температур каждого дня недели.
+        """
         # Транслитерация названия города с русского на английский
         city_en = translit(city, language_code='ru', reversed=True)
         all_cities_data = requests.get(url=self.URL_GET_COORD, params={'name': city_en}, timeout=3)
 
+        # Если координаты города не были получены, возвращается пустой список и флаг ошибки
         if all_cities_data.json().get('results', None) is None:
             return ['-' for _ in range(7)], 'error'
 
