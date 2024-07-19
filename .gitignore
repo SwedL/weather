@@ -2,3 +2,6 @@
 .env
 .flake8
 /db.sqlite3
+/forecast/__pycache__/
+/weather/__pycache__/
+/weather/.idea/
