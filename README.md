@@ -41,6 +41,10 @@ git clone https://github.com/SwedL/weather.git
 ```sh
 pip install -r requirements.txt
 ```
+Создайте необходимые таблицы базы данных командой:
+```sh
+python manage.py migrate
+```
 
 Запустите сервер:
 ```sh
@@ -52,6 +56,10 @@ python manage.py runserver
 Скачайте код:
 ```sh
 git clone https://github.com/SwedL/weather.git
+```
+Перейдите в каталог проекта `weather`.<br>
+```sh
+cd weather
 ```
 Затем выполните сборку и запуск образа командами:
 ```sh
