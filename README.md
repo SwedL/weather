@@ -25,8 +25,11 @@
 ```sh
 git clone https://github.com/SwedL/weather.git
 ```
-Перейдите в каталог проекта `weather`, создайте виртуальное окружение, выполнив команду:
-
+Перейдите в каталог проекта `weather`.<br>
+```sh
+cd weather
+```
+создайте виртуальное окружение:
 - Windows: `python -m venv venv`
 - Linux: `python3 -m venv venv`
 
