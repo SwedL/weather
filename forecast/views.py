@@ -6,7 +6,6 @@ from .forms import CityNameForm
 from datetime import date, timedelta
 from common.views import WeatherSource
 from django.urls import reverse
-from django.views.decorators.http import require_http_methods
 
 
 class WeatherForecastView(WeatherSource, View):
@@ -30,13 +29,14 @@ class WeatherForecastView(WeatherSource, View):
         return render(request, 'forecast/main.html', context=context)
 
     def post(self, request):
-        error = None
+        error = None  # флаг указывающий ошибки получения данных по городу, для alert сообщения
 
         city = request.POST['city']
         temperatures_by_week = cache.get(city)
 
         # кэшируем данные температуры по городу на 1 час
         if not temperatures_by_week:
+            # получаем максимальные температуры на неделю
             temperatures_by_week, error = self.get_weather_forecast(city)
             cache.set(city, temperatures_by_week, 3600)
 
