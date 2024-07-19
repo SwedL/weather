@@ -42,7 +42,7 @@ class WeatherForecastView(WeatherSource, View):
                                      zip(self.create_date, temperatures_by_week)]
 
         context = {
-            'form': self.form_class,
+            'form': self.form_class(request.POST),
             'title': self.title,
             'date_and_temperature_list': date_and_temperature_list,
             'error': error,

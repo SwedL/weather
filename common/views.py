@@ -13,7 +13,7 @@ class WeatherSource:
         """Функция """
         # Транслитерация названия города с русского на английский
         city_en = translit(city, language_code='ru', reversed=True)
-        all_cities_data = requests.get(url=self.URL_GET_COORD, params={'name': city_en})
+        all_cities_data = requests.get(url=self.URL_GET_COORD, params={'name': city_en}, timeout=3)
 
         if all_cities_data.json().get('results', None) is None:
             return ['-' for _ in range(7)], 'error'
@@ -25,7 +25,7 @@ class WeatherSource:
             'hourly': 'temperature_2m',
         }
 
-        all_data_city = requests.get(url=self.URL_WEATHER_FORECAST, params=params)  # получаем данные по городу
+        all_data_city = requests.get(url=self.URL_WEATHER_FORECAST, params=params, timeout=3)  # получаем данные по городу
         all_temperatures_list = all_data_city.json()['hourly']['temperature_2m']  # выбираем температуры на неделю
         temperature_by_day_week = np.reshape(all_temperatures_list, (7, 24)).tolist()  # группируем температуры по дням
         max_temperature_by_day_week = [max(t) for t in temperature_by_day_week]  # создаём список максимальных температур на неделю
