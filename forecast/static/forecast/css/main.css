@@ -37,7 +37,7 @@ body {
 /* .login h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; } */
 
 input {
-  width: 100%;
+  width: 87%;
   margin-bottom: 10px;
   background: #E8F0FE;
   border: none;
@@ -53,6 +53,15 @@ input {
   -o-transition: box-shadow .5s ease;
   -ms-transition: box-shadow .5s ease;
   transition: box-shadow .5s ease;
+}
+
+.form__clear {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-x {
+  margin-top: 4px;
 }
 
 .forecast {

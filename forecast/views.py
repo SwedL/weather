@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.views import View
 from django.core.cache import cache
 from .forms import CityNameForm
 from datetime import date, timedelta
 from common.views import WeatherSource
+from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 
 
 class WeatherForecastView(WeatherSource, View):
@@ -49,6 +51,13 @@ class WeatherForecastView(WeatherSource, View):
         }
 
         return render(request, 'forecast/main.html', context=context)
+
+
+def clear_search(request):
+    """ Функция для очистки полей формы поиска CityNameForm """
+
+    redirect_url = reverse('forecast:weather_forecast')
+    return HttpResponseRedirect(redirect_url)
 
 
 def pageNotFound(request, exception):

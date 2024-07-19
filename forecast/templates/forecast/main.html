@@ -15,7 +15,10 @@
     <form method="post">
         {% csrf_token %}
 
+        <div class="form__clear">
         {{form.city}}
+        <a href="{% url 'forecast:clear_search' %}"><button type="button" class="btn btn-primary btn-x">X</button></a>
+        </div>
 
         <button type="submit" class="btn btn-primary btn-block btn-large">Получить прогноз</button>
     </form>
