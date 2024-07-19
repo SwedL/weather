@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseNotFound
 from django.views import View
+from django.core.cache import cache
 from .forms import CityNameForm
 from datetime import date, timedelta
 from common.views import WeatherSource
@@ -27,9 +28,16 @@ class WeatherForecastView(WeatherSource, View):
         return render(request, 'forecast/main.html', context=context)
 
     def post(self, request):
-        city = request.POST['city']
+        error = None
 
-        temperatures_by_week, error = self.get_weather_forecast(city)
+        city = request.POST['city']
+        temperatures_by_week = cache.get(city)
+
+        # кэшируем данные температуры по городу на 1 час
+        if not temperatures_by_week:
+            temperatures_by_week, error = self.get_weather_forecast(city)
+            cache.set(city, temperatures_by_week, 3600)
+
         date_and_temperature_list = [{'date': d, 'temperature': t} for d, t in
                                      zip(self.create_date, temperatures_by_week)]
 

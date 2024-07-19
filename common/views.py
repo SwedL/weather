@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Tuple
 import requests
 from transliterate import translit
 import numpy as np
