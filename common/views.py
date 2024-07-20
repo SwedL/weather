@@ -2,7 +2,6 @@ from typing import Tuple
 
 import numpy as np
 import requests
-from transliterate import translit
 
 
 class WeatherSource:
@@ -12,7 +11,7 @@ class WeatherSource:
 
     def get_data_all_cities(self, city_en):
         """ Функция делает запрос и возвращает данные по всем городам, подходящих под заданное имя города """
-        return requests.get(url=self.URL_GET_COORD, params={'name': city_en}, timeout=3).json()
+        return requests.get(url=self.URL_GET_COORD, params={'name': city_en, 'language': 'ru'}, timeout=3).json()
 
     def get_city_temperature_data(self, params):
         """ Функция делает запрос и возвращает данные температур на неделю по заданным координатам"""
@@ -24,9 +23,8 @@ class WeatherSource:
         по температурам этих координат на неделю.
         Возвращает список из максимальных температур каждого дня недели.
         """
-        # Транслитерация названия города с русского на английский
-        city_en = translit(city, language_code='ru', reversed=True)
-        data_all_cities = self.get_data_all_cities(city_en=city_en)
+        # получаем данные по всем городам, подходящих под заданное имя города
+        data_all_cities = self.get_data_all_cities(city_en=city)
 
         # Если координаты города не были получены, возвращается пустой список и флаг ошибки
         if data_all_cities.get('results', None) is None:
