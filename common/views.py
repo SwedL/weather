@@ -12,11 +12,11 @@ class WeatherSource:
 
     def get_data_all_cities(self, city_en):
         """ Функция делает запрос и возвращает данные по всем городам, подходящих под заданное имя города """
-        return requests.get(url=self.URL_GET_COORD, params={'name': city_en}, timeout=3)
+        return requests.get(url=self.URL_GET_COORD, params={'name': city_en}, timeout=3).json()
 
     def get_city_temperature_data(self, params):
         """ Функция делает запрос и возвращает данные температур на неделю по заданным координатам"""
-        return requests.get(url=self.URL_WEATHER_FORECAST, params=params, timeout=3)
+        return requests.get(url=self.URL_WEATHER_FORECAST, params=params, timeout=3).json()
 
     def get_weather_forecast(self, city) -> Tuple:
         """
@@ -29,10 +29,10 @@ class WeatherSource:
         data_all_cities = self.get_data_all_cities(city_en=city_en)
 
         # Если координаты города не были получены, возвращается пустой список и флаг ошибки
-        if data_all_cities.json().get('results', None) is None:
+        if data_all_cities.get('results', None) is None:
             return ['-' for _ in range(7)], 'error'
 
-        data_first_city = data_all_cities.json()['results'][0]  # получаем данные из наиболее точного указания города
+        data_first_city = data_all_cities['results'][0]  # получаем данные из наиболее точного указания города
         params = {
             'latitude': data_first_city['latitude'],
             'longitude': data_first_city['longitude'],
@@ -40,7 +40,7 @@ class WeatherSource:
         }
 
         city_temperature_data = self.get_city_temperature_data(params=params)  # получаем данные по городу
-        all_temperatures_list = city_temperature_data.json()['hourly']['temperature_2m']  # выбираем температуры на неделю
+        all_temperatures_list = city_temperature_data['hourly']['temperature_2m']  # выбираем температуры на неделю
         temperature_by_day_week = np.reshape(all_temperatures_list, (7, 24)).tolist()  # группируем температуры по дням
         max_temperature_by_day_week = [max(t) for t in temperature_by_day_week]  # создаём список максимальных температур на неделю
 
