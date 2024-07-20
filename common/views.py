@@ -1,4 +1,5 @@
-from typing import Tuple
+import string
+from typing import Dict, Tuple
 
 import numpy as np
 import requests
@@ -9,22 +10,27 @@ class WeatherSource:
     URL_GET_COORD = "https://geocoding-api.open-meteo.com/v1/search"
     URL_WEATHER_FORECAST = "https://api.open-meteo.com/v1/forecast"
 
-    def get_data_all_cities(self, city_en):
+    def get_data_all_cities(self, params: Dict) -> Dict:
         """ Функция делает запрос и возвращает данные по всем городам, подходящих под заданное имя города """
-        return requests.get(url=self.URL_GET_COORD, params={'name': city_en, 'language': 'ru'}, timeout=3).json()
+        return requests.get(url=self.URL_GET_COORD, params=params, timeout=3).json()
 
-    def get_city_temperature_data(self, params):
+    def get_city_temperature_data(self, params: Dict) -> Dict:
         """ Функция делает запрос и возвращает данные температур на неделю по заданным координатам"""
         return requests.get(url=self.URL_WEATHER_FORECAST, params=params, timeout=3).json()
 
-    def get_weather_forecast(self, city) -> Tuple:
+    def get_weather_forecast(self, city: str) -> Tuple:
         """
         Функция получает название города, находит его координаты, затем по координатам получает данные
         по температурам этих координат на неделю.
         Возвращает список из максимальных температур каждого дня недели.
         """
+        if all(map(lambda s: s in string.ascii_letters, city.lower())):
+            params = {'name': city, 'language': 'en'}
+        else:
+            params = {'name': city, 'language': 'ru'}
+
         # получаем данные по всем городам, подходящих под заданное имя города
-        data_all_cities = self.get_data_all_cities(city_en=city)
+        data_all_cities = self.get_data_all_cities(params=params)
 
         # Если координаты города не были получены, возвращается пустой список и флаг ошибки
         if data_all_cities.get('results', None) is None:
