@@ -2,9 +2,11 @@ from http import HTTPStatus
 
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
+from unittest.mock import patch, Mock
 
 from forecast.forms import CityNameForm
 from forecast.views import WeatherForecastView
+from common.views import WeatherSource
 
 
 class WeatherForecastViewTest(SimpleTestCase):
@@ -28,7 +30,10 @@ class WeatherForecastViewTest(SimpleTestCase):
         self.assertIn('Получить прогноз', self.response.content.decode())
         self.assertIn('X', self.response.content.decode())
 
+
+class WeatherSourceViewTest(SimpleTestCase):
+
+    @patch.object(WeatherSource, 'get_data_all_cities', 'get_city_temperature_data')
     def test_get_weather_forecast(self):
         # Тест на получение данных погоды
         pass
-    
