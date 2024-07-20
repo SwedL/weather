@@ -1,9 +1,9 @@
 import unittest
 from http import HTTPStatus
+from unittest.mock import patch
 
 from django.test import SimpleTestCase
 from django.urls import reverse
-from unittest.mock import patch
 
 from common.views import WeatherSource
 
@@ -131,7 +131,7 @@ class WeatherSourceViewTest(unittest.TestCase):
     @patch.object(WeatherSource, 'get_city_temperature_data')
     @patch.object(WeatherSource, 'get_data_all_cities')
     def test_get_weather_forecast(self, mock_get_data_all_cities, mock_get_city_temperature_data):
-        # Тест на получение данных погоды
+        # Тест на получение данных погоды с правильно введённым названием города
 
         mock_get_data_all_cities.return_value = mock_value_moscow
         mock_get_city_temperature_data.return_value = mock_value_city_temperature_data
@@ -140,7 +140,7 @@ class WeatherSourceViewTest(unittest.TestCase):
         self.assertEqual(([23.7, 23.2, 23.0, 23.5, 26.0, 25.0, 25.4], None), result)
 
     def test_get_weather_forecast_with_invalid_data(self):
-        # Тест на получение данных погоды с неправильно введённым название города
+        # Тест на получение данных погоды с неправильно введённым названием города
 
         result = self.weather_source.get_weather_forecast('--')
         self.assertEqual((['-' for _ in range(7)], 'error'), result)
