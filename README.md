@@ -21,29 +21,30 @@
 
 ## Установка
 
-Скачайте код:
+- #### Склонируйте репозиторий:
 ```sh
 git clone https://github.com/SwedL/weather.git
-```
-Перейдите в каталог проекта `weather`.<br>
-```sh
 cd weather
 ```
-создайте виртуальное окружение:
-- Windows: `python -m venv venv`
-- Linux: `python3 -m venv venv`
+- ### Создайте и активируйте виртуальное окружение:
+- #### через pip:
+```
+python -m venv venv
+.\venv\Scripts\activate
+```
 
-Активируйте его командой:
-
-- Windows: `.\venv\Scripts\activate`
-- Linux: `source venv/bin/activate`
-
-
-Установите зависимости в виртуальное окружение:
+- установите зависимости в виртуальное окружение:
 
 ```sh
 pip install -r requirements.txt
 ```
+
+- #### через Poetry:
+```sh
+poetry shell
+poetry install
+```
+
 Создайте необходимые таблицы базы данных командой:
 ```sh
 python manage.py migrate
