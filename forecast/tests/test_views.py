@@ -5,7 +5,9 @@ from unittest.mock import patch
 from django.test import SimpleTestCase
 from django.urls import reverse
 
-from common.views import WeatherSource
+from forecast.forms import CityNameForm
+from forecast.repositories.forecast import ForeCastRepository
+from forecast.services.forecast import Day, ForeCastService
 
 mock_value_moscow = {"results": [
     {"id": 524901, "name": "Moscow", "latitude": 55.75222, "longitude": 37.61556, "elevation": 144.0,
@@ -110,7 +112,7 @@ class WeatherForecastViewTest(SimpleTestCase):
     def test_view_form(self):
         # Тест на соответствие формы экземпляру CityNameForm и наличие csrf токена
         form = self.response.context.get('form')
-        # self.assertIsInstance(form, CityNameForm)
+        self.assertIs(form, CityNameForm)
         self.assertContains(self.response, 'csrfmiddlewaretoken')
 
     def test_view_content_test(self):
@@ -123,24 +125,31 @@ class WeatherForecastViewTest(SimpleTestCase):
 
 
 class WeatherSourceViewTest(unittest.TestCase):
-    """ Тест миксина WeatherSource """
+    """ Тест слоя ForeCastService """
 
     def setUp(self):
-        self.weather_source = WeatherSource()
+        self.forecast_repository = ForeCastRepository()
+        self.forecast_service = ForeCastService()
 
-    @patch.object(WeatherSource, 'get_city_temperature_data')
-    @patch.object(WeatherSource, 'get_data_all_cities')
-    def test_get_weather_forecast(self, mock_get_data_all_cities, mock_get_city_temperature_data):
+    @patch.object(ForeCastRepository, 'get_temperature_by_geo_coord')
+    @patch.object(ForeCastRepository, 'find_city')
+    def test_get_weather_forecast_in_city(self, mock_find_city, mock_get_temperature_by_geo_coord):
         # Тест на получение данных погоды с правильно введённым названием города
 
-        mock_get_data_all_cities.return_value = mock_value_moscow
-        mock_get_city_temperature_data.return_value = mock_value_city_temperature_data
+        mock_find_city.return_value = mock_value_moscow
+        mock_get_temperature_by_geo_coord.return_value = mock_value_city_temperature_data
 
-        result = self.weather_source.get_weather_forecast('Москва')
-        self.assertEqual(([23.7, 23.2, 23.0, 23.5, 26.0, 25.0, 25.4], None), result)
+        day_list = self.forecast_service.get_weather_forecast_in_city('Москва')
+        self.assertEqual([23.7, 23.2, 23.0, 23.5, 26.0, 25.0, 25.4], self.get_temperature(day_list))
 
-    def test_get_weather_forecast_with_invalid_data(self):
+    def test_get_weather_forecast_in_city_with_invalid_data(self):
         # Тест на получение данных погоды с неправильно введённым названием города
 
-        result = self.weather_source.get_weather_forecast('--')
-        self.assertEqual((['-' for _ in range(7)], 'error'), result)
+        try:
+            self.forecast_service.get_weather_forecast_in_city('--')
+        except Exception as err:
+            self.assertEqual(str(err), "Ошибка при запросе получения координат города")
+
+    @staticmethod
+    def get_temperature(day_list: list[Day]) -> list[str]:
+        return [d.temperature for d in day_list]

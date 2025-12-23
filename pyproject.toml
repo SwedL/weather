@@ -1,0 +1,27 @@
+[project]
+name = "weather"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "osminin",email = "osminin555@bk.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django (>=6.0,<7.0)",
+    "numpy (>=2.3.5,<3.0.0)",
+    "requests (>=2.32.5,<3.0.0)",
+    "sqlparse (>=0.5.5,<0.6.0)",
+    "django-debug-toolbar (>=6.1.0,<7.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "flake8 (>=7.3.0,<8.0.0)",
+    "isort (>=7.0.0,<8.0.0)"
+]
